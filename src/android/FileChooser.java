@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 
 public class FileChooser extends CordovaPlugin {
 
@@ -58,9 +62,18 @@ public class FileChooser extends CordovaPlugin {
                 Uri uri = data.getData();
 
                 if (uri != null) {
-
-                    Log.w(TAG, uri.toString());
-                    callback.success(uri.toString());
+                    try {                        
+                        File file = new File(uri.getPath());
+                        JSONObject json = new JSONObject();
+                        json.put("uri", uri.toString());
+                        json.put("extension", MimeTypeMap.getFileExtensionFromUrl(file.toURI().toURL().toString()));
+                        Log.w(TAG, uri.toString());
+                        callback.success(json);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+ +                      e.printStackTrace();
+                    }
 
                 } else {
 
