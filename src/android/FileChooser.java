@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 public class FileChooser extends CordovaPlugin {
 
