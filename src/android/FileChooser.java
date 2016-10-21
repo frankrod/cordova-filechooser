@@ -71,8 +71,10 @@ public class FileChooser extends CordovaPlugin {
                         json.put("extension", MimeTypeMap.getFileExtensionFromUrl(file.toURI().toURL().toString()));
                         Log.w(TAG, uri.toString());
                         callback.success(json);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    } catch(MalformedURLException ex){
+                        ex.printStackTrace();
                     }
 
                 } else {
